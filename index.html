@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .cta {
+            margin-top: 50px;
+        }
+        .cta a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .cta a:hover {
+            background-color: #0056b3;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .navigation button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 0 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+        .current-page {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur Mon Site Web</h1>
+        <p>Découvrez notre contenu passionnant</p>
+    </header>
+    <div class="container">
+        <h2>Qui sommes-nous ?</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac justo non magna consequat efficitur sed vel nisi.</p>
+        <div class="cta">
+            <a href="#">Découvrir</a>
+        </div>
+    </div>
+    <footer>
+        <div class="navigation">
+            <button id="firstPageBtn" style="display: none;"><<</button>
+            <button id="prevPageBtn"><</button>
+            <span class="current-page">1</span>
+            <button id="nextPageBtn">></button>
+            <button id="lastPageBtn">>></button>
+        </div>
+        <p>&copy; 2024 Mon Site Web. Tous droits réservés.</p>
+    </footer>
+    <script>
+        var currentPage = 1; // Page actuelle
+
+        document.getElementById("firstPageBtn").addEventListener("click", function() {
+            currentPage = 1;
+            updateCurrentPage();
+        });
+
+        document.getElementById("prevPageBtn").addEventListener("click", function() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateCurrentPage();
+            }
+        });
+
+        document.getElementById("nextPageBtn").addEventListener("click", function() {
+            // Ajoutez ici votre logique pour naviguer vers la page suivante
+            currentPage++;
+            updateCurrentPage();
+        });
+
+        document.getElementById("lastPageBtn").addEventListener("click", function() {
+            // Ajoutez ici votre logique pour naviguer vers la dernière page
+            currentPage = 5; // Exemple : si vous avez 5 pages
+            updateCurrentPage();
+        });
+
+        function updateCurrentPage() {
+            document.querySelector(".current-page").textContent = currentPage;
+            // Cacher ou afficher les boutons en fonction de la page actuelle
+            if (currentPage === 1) {
+                document.getElementById("firstPageBtn").style.display = "none";
+                document.getElementById("prevPageBtn").style.display = "none";
+            } else {
+                document.getElementById("firstPageBtn").style.display = "inline-block";
+                document.getElementById("prevPageBtn").style.display = "inline-block";
+            }
+
+            // Modifier ici pour le nombre total de pages dans votre site web
+            var totalPages = 5;
+            if (currentPage === totalPages) {
+                document.getElementById("nextPageBtn").style.display = "none";
+                document.getElementById("lastPageBtn").style.display = "none";
+            } else {
+                document.getElementById("nextPageBtn").style.display = "inline-block";
+                document.getElementById("lastPageBtn").style.display = "inline-block";
+            }
+        }
+    </script>
+</body>
+</html>
