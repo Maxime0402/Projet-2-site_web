@@ -66,6 +66,9 @@
             margin: 0 10px;
             font-size: 1rem;
         }
+        .next-page, .prev-page {
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +87,9 @@
         <div class="navigation">
             <button id="firstPageBtn" style="display: none;"><<</button>
             <button id="prevPageBtn"><</button>
+            <span class="prev-page">1</span>
             <span class="current-page">1</span>
+            <span class="next-page">2</span>
             <button id="nextPageBtn">></button>
             <button id="lastPageBtn">>></button>
         </div>
@@ -119,6 +124,9 @@
 
         function updateCurrentPage() {
             document.querySelector(".current-page").textContent = currentPage;
+            document.querySelector(".prev-page").textContent = currentPage - 1;
+            document.querySelector(".next-page").textContent = currentPage + 1;
+
             // Cacher ou afficher les boutons en fonction de la page actuelle
             if (currentPage === 1) {
                 document.getElementById("firstPageBtn").style.display = "none";
