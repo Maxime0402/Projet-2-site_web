@@ -63,11 +63,15 @@
         }
         .current-page {
             display: inline-block;
-            margin: 0 10px;
+            margin: 0 5px;
             font-size: 1rem;
+            cursor: pointer; /* Ajout du curseur pointer */
         }
-        .next-page, .prev-page {
+        .page-numbers {
             font-size: 0.8rem;
+            color: #999;
+            margin: 0 5px;
+            cursor: pointer; /* Ajout du curseur pointer */
         }
     </style>
 </head>
@@ -87,9 +91,9 @@
         <div class="navigation">
             <button id="firstPageBtn" style="display: none;"><<</button>
             <button id="prevPageBtn"><</button>
-            <span class="prev-page">1</span>
-            <span class="current-page">1</span>
-            <span class="next-page">2</span>
+            <span class="prev-page page-numbers" onclick="goToPage(currentPage - 1)"></span>
+            <span class="current-page" onclick="goToPage(currentPage)"></span>
+            <span class="next-page page-numbers" onclick="goToPage(currentPage + 1)"></span>
             <button id="nextPageBtn">></button>
             <button id="lastPageBtn">>></button>
         </div>
@@ -97,6 +101,11 @@
     </footer>
     <script>
         var currentPage = 1; // Page actuelle
+
+        // Mise à jour de la page actuelle après le chargement du document
+        document.addEventListener("DOMContentLoaded", function() {
+            updateCurrentPage();
+        });
 
         document.getElementById("firstPageBtn").addEventListener("click", function() {
             currentPage = 1;
@@ -122,29 +131,26 @@
             updateCurrentPage();
         });
 
+        function goToPage(page) {
+            if (page >= 1 && page <= 5) { // Modifier ici pour le nombre total de pages dans votre site web
+                currentPage = page;
+                updateCurrentPage();
+            }
+        }
+
         function updateCurrentPage() {
             document.querySelector(".current-page").textContent = currentPage;
-            document.querySelector(".prev-page").textContent = currentPage - 1;
-            document.querySelector(".next-page").textContent = currentPage + 1;
+            document.querySelector(".prev-page").textContent = currentPage - 1 >= 1 ? currentPage - 1 : '';
+            document.querySelector(".next-page").textContent = currentPage < 5 ? currentPage + 1 : '';
+            
+            // Mettre à jour l'URL avec le numéro de page actuel
+            history.pushState({}, "", "?page=" + currentPage);
 
             // Cacher ou afficher les boutons en fonction de la page actuelle
-            if (currentPage === 1) {
-                document.getElementById("firstPageBtn").style.display = "none";
-                document.getElementById("prevPageBtn").style.display = "none";
-            } else {
-                document.getElementById("firstPageBtn").style.display = "inline-block";
-                document.getElementById("prevPageBtn").style.display = "inline-block";
-            }
-
-            // Modifier ici pour le nombre total de pages dans votre site web
-            var totalPages = 5;
-            if (currentPage === totalPages) {
-                document.getElementById("nextPageBtn").style.display = "none";
-                document.getElementById("lastPageBtn").style.display = "none";
-            } else {
-                document.getElementById("nextPageBtn").style.display = "inline-block";
-                document.getElementById("lastPageBtn").style.display = "inline-block";
-            }
+            document.getElementById("firstPageBtn").style.display = currentPage === 1 ? "none" : "inline-block";
+            document.getElementById("prevPageBtn").style.display = currentPage === 1 ? "none" : "inline-block";
+            document.getElementById("nextPageBtn").style.display = currentPage === 5 ? "none" : "inline-block";
+            document.getElementById("lastPageBtn").style.display = currentPage === 5 ? "none" : "inline-block";
         }
     </script>
 </body>
