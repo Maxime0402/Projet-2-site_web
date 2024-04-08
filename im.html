@@ -1,0 +1,73 @@
+<?php include 'configuration.php'; ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Site Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .authors-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .author-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur Mon Site Web</h1>
+        <p>Découvrez notre contenu passionnant</p>
+    </header>
+    <div class="container">
+        <h2>Liste des Auteurs</h2>
+        <ul class="authors-list">
+            <?php
+            // Récupérer les noms des auteurs de la table "sport" dans la base de données "creation_web"
+            try {
+                $sql = "SELECT DISTINCT auteur FROM sport";
+                $stmt = $pdo->query($sql);
+
+                // Parcourir les résultats et afficher les noms des auteurs
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<li class="author-item">' . $row['auteur'] . '</li>';
+                }
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
+            ?>
+        </ul>
+        <div class="cta">
+            <a href="#">Découvrir</a>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Mon Site Web. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
